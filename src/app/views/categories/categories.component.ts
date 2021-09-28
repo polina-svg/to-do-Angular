@@ -9,14 +9,19 @@ import { DataHandlerService } from 'src/app/service/data-handler.service';
 })
 export class CategoriesComponent implements OnInit {
   categories: Category[];
+
+  selectedCategory: Category;
   constructor(private dataHandler: DataHandlerService) { }
 
   ngOnInit(): void {
-    this.categories = this.dataHandler.getCategories();
+    this.dataHandler.categoriesSubject.subscribe(categories => this.categories = categories);
+
+    //this.categories = this.dataHandler.getCategories(); 
     
   }
 
   showTaskByCategory(category: Category){
+    this.selectedCategory = category;
     this.dataHandler.fillTasksByCategory(category);
   }
 }
